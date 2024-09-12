@@ -150,3 +150,7 @@ media/
 
 sent_emails/
 
+# папки со статикой и медиа
+media/
+static/
+static_dev/
