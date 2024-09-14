@@ -11,4 +11,3 @@ app_name = 'core'
 #          name='category_posts'),
 # ]
 
-handler404 = 'core/views.page_not_found'

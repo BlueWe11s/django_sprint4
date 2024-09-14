@@ -36,6 +36,9 @@ urlpatterns = [
     ),
 ]
 
+handler404 = 'core.views.page_not_found'
+handler500 = 'core.views.server_error'
+
 if settings.DEBUG:
     import debug_toolbar
     # Добавить к списку urlpatterns список адресов из приложения debug_toolbar:

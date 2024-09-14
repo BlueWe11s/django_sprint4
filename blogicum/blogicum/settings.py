@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$u86j1!$vc#)#6)9k(*89&k!_ks9=w%7wpb3rp7tw#vbniss_o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -133,3 +133,5 @@ INTERNAL_IPS = [
 CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 
 LOGIN_REDIRECT_URL = 'pages:homepage'
+
+CSRF_FAILURE_VIEW = 'core.views.csrf_failure' 
