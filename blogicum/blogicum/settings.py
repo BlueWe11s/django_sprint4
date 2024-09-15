@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$u86j1!$vc#)#6)9k(*89&k!_ks9=w%7wpb3rp7tw#vbniss_o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_bootstrap5',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,6 +133,13 @@ INTERNAL_IPS = [
 
 CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 
-LOGIN_REDIRECT_URL = 'pages:homepage'
+LOGIN_REDIRECT_URL = 'blog:index'
+LOGIN_URL = 'login'
 
-CSRF_FAILURE_VIEW = 'core.views.csrf_failure' 
+CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
+
+POSTS_PER_PAGE = 10
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'

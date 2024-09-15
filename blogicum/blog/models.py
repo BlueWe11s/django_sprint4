@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from core.models import PublishedModel
 from .querysets import PostsQuerySet
-from .const import MAX_LENGTH
+MAX_LENGTH = 256
 
 User = get_user_model()
 
@@ -89,3 +89,25 @@ class Post(PublishedModel):
 
     def __str__(self):
         return self.title
+
+
+class Comment(PublishedModel):
+    text = models.TextField('Текст комментария')
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='публикация',
+    )
+
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               verbose_name='Автор комментария')
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return f'Комментарий пользователя {self.author}'
