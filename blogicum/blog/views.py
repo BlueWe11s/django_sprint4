@@ -5,7 +5,7 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import (CreateView, ListView, UpdateView, DetailView)
+from django.views.generic import (CreateView, ListView, UpdateView, DetailView, DeleteView)
 from .form import CommentForm, PostForm, ProfileEditForm
 from .models import Category, Comment, Post
 # from .utils import get_post_data
@@ -33,13 +33,32 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(Post.objects.published(),
-                                 pk=self.kwargs['post_id'])
+                                 pk=self.kwargs['id'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
         context['comments'] = self.object.comments.select_related('author')
         return context
+
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = 'blog/create.html'
+    pk_url_kwarg = 'post_id'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().author != request.user:
+            return redirect('blog:post_detail', id=self.kwargs['post_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = PostForm(instance=self.object)
+        return context
+
+    def get_success_url(self):
+        return reverse("blog:profile", kwargs={"username": self.request.user})
 
 
 class CategoryPostsListView(ListView):
@@ -120,3 +139,10 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('blog:profile', args=[self.request.user.username])
+
+
+class CommentCreateView(CreateView):
+   model = Comment
+   form_class = CommentForm
+   template_name = 'comment.html'
+
