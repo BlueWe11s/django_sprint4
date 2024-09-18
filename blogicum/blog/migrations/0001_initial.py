@@ -15,82 +15,226 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_created=True, auto_now_add=True, help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.', verbose_name='Добавлено')),
-                ('is_published', models.BooleanField(default=True, help_text='Снимите галочку, чтобы скрыть публикацию.', verbose_name='Опубликовано')),
-                ('title', models.CharField(max_length=256, verbose_name='Заголовок')),
-                ('description', models.TextField(verbose_name='Описание')),
-                ('slug', models.SlugField(help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.', unique=True, verbose_name='Идентификатор')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_created=True,
+                        auto_now_add=True,
+                        help_text="Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.",
+                        verbose_name="Добавлено",
+                    ),
+                ),
+                (
+                    "is_published",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Снимите галочку, чтобы скрыть публикацию.",
+                        verbose_name="Опубликовано",
+                    ),
+                ),
+                ("title", models.CharField(max_length=256, verbose_name="Заголовок")),
+                ("description", models.TextField(verbose_name="Описание")),
+                (
+                    "slug",
+                    models.SlugField(
+                        help_text="Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.",
+                        unique=True,
+                        verbose_name="Идентификатор",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'категория',
-                'verbose_name_plural': 'Категории',
+                "verbose_name": "категория",
+                "verbose_name_plural": "Категории",
             },
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_created=True, auto_now_add=True, help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.', verbose_name='Добавлено')),
-                ('is_published', models.BooleanField(default=True, help_text='Снимите галочку, чтобы скрыть публикацию.', verbose_name='Опубликовано')),
-                ('text', models.TextField(verbose_name='Текст комментария')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_created=True,
+                        auto_now_add=True,
+                        help_text="Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.",
+                        verbose_name="Добавлено",
+                    ),
+                ),
+                (
+                    "is_published",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Снимите галочку, чтобы скрыть публикацию.",
+                        verbose_name="Опубликовано",
+                    ),
+                ),
+                ("text", models.TextField(verbose_name="Текст комментария")),
             ],
             options={
-                'verbose_name': 'Комментарий',
-                'verbose_name_plural': 'Комментарии',
-                'ordering': ('created_at',),
+                "verbose_name": "Комментарий",
+                "verbose_name_plural": "Комментарии",
+                "ordering": ("created_at",),
             },
         ),
         migrations.CreateModel(
-            name='Location',
+            name="Location",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_created=True, auto_now_add=True, help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.', verbose_name='Добавлено')),
-                ('is_published', models.BooleanField(default=True, help_text='Снимите галочку, чтобы скрыть публикацию.', verbose_name='Опубликовано')),
-                ('name', models.CharField(max_length=256, verbose_name='Название места')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_created=True,
+                        auto_now_add=True,
+                        help_text="Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.",
+                        verbose_name="Добавлено",
+                    ),
+                ),
+                (
+                    "is_published",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Снимите галочку, чтобы скрыть публикацию.",
+                        verbose_name="Опубликовано",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=256, verbose_name="Название места"),
+                ),
             ],
             options={
-                'verbose_name': 'местоположение',
-                'verbose_name_plural': 'Местоположения',
+                "verbose_name": "местоположение",
+                "verbose_name_plural": "Местоположения",
             },
         ),
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_created=True, auto_now_add=True, help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.', verbose_name='Добавлено')),
-                ('is_published', models.BooleanField(default=True, help_text='Снимите галочку, чтобы скрыть публикацию.', verbose_name='Опубликовано')),
-                ('title', models.CharField(max_length=256, verbose_name='Заголовок')),
-                ('text', models.TextField(verbose_name='Текст')),
-                ('pub_date', models.DateTimeField(help_text='Если установить дату и время в будущем — можно делать отложенные публикации.', verbose_name='Дата и время публикации')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to=settings.AUTH_USER_MODEL, verbose_name='Автор публикации')),
-                ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='posts', to='blog.category', verbose_name='Категория')),
-                ('location', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='posts', to='blog.location', verbose_name='Местоположение')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_created=True,
+                        auto_now_add=True,
+                        help_text="Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.",
+                        verbose_name="Добавлено",
+                    ),
+                ),
+                (
+                    "is_published",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Снимите галочку, чтобы скрыть публикацию.",
+                        verbose_name="Опубликовано",
+                    ),
+                ),
+                ("title", models.CharField(max_length=256, verbose_name="Заголовок")),
+                ("text", models.TextField(verbose_name="Текст")),
+                (
+                    "pub_date",
+                    models.DateTimeField(
+                        help_text="Если установить дату и время в будущем — можно делать отложенные публикации.",
+                        verbose_name="Дата и время публикации",
+                    ),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="posts",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Автор публикации",
+                    ),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="posts",
+                        to="blog.category",
+                        verbose_name="Категория",
+                    ),
+                ),
+                (
+                    "location",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="posts",
+                        to="blog.location",
+                        verbose_name="Местоположение",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'публикация',
-                'verbose_name_plural': 'Публикации',
-                'default_related_name': 'posts',
+                "verbose_name": "публикация",
+                "verbose_name_plural": "Публикации",
+                "default_related_name": "posts",
             },
         ),
         migrations.AddIndex(
-            model_name='location',
-            index=models.Index(fields=['name'], name='blog_locati_name_7b19d9_idx'),
+            model_name="location",
+            index=models.Index(fields=["name"], name="blog_locati_name_7b19d9_idx"),
         ),
         migrations.AddField(
-            model_name='comment',
-            name='author',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Автор комментария'),
+            model_name="comment",
+            name="author",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Автор комментария",
+            ),
         ),
         migrations.AddField(
-            model_name='comment',
-            name='post',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='blog.post', verbose_name='публикация'),
+            model_name="comment",
+            name="post",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="comments",
+                to="blog.post",
+                verbose_name="публикация",
+            ),
         ),
         migrations.AddIndex(
-            model_name='category',
-            index=models.Index(fields=['slug'], name='blog_catego_slug_fc0bb9_idx'),
+            model_name="category",
+            index=models.Index(fields=["slug"], name="blog_catego_slug_fc0bb9_idx"),
         ),
     ]
