@@ -61,7 +61,7 @@ class PostDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(
-            Post.objects.published(),
+            self.objects.published(),
             pk=self.kwargs["id"]
         )
 
