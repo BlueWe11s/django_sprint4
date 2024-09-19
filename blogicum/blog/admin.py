@@ -1,6 +1,6 @@
 from django.contrib import admin  # type: ignore
 
-from .models import Category, Location, Post
+from .models import Category, Location, Post, Comment
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -47,7 +47,13 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "slug", "is_published", "created_at")
+    list_display = (
+        "title",
+        "description",
+        "slug",
+        "is_published",
+        "created_at"
+    )
     list_editable = ("is_published",)
     search_fields = (
         "title",
@@ -62,7 +68,16 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ("title", "slug")
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("post", "text", "created_at", "author")
+    list_editable = ("text",)
+    search_fields = ("text", "post", "author")
+    list_filter = ("post", "text", "created_at", "author")
+    list_display_links = ("author", "post")
+
+
 admin.site.empty_value_display = "-- Не задано --"
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(Comment, CommentAdmin)

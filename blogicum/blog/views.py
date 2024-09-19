@@ -1,5 +1,4 @@
 from typing import Any
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Count
@@ -18,6 +17,7 @@ from django.views.generic import (
 from .form import CommentForm, PostForm, ProfileEditForm
 from .models import Category, Comment, Post
 from .utils import get_post_data
+from .const import POST_IN_PAGE
 
 
 User = get_user_model()
@@ -25,7 +25,7 @@ User = get_user_model()
 
 class IndexListView(ListView):
     model = Post
-    paginate_by = settings.POSTS_PER_PAGE
+    paginate_by = POST_IN_PAGE
     template_name = "blog/index.html"
 
     def get_queryset(self):
@@ -35,11 +35,11 @@ class IndexListView(ListView):
             .annotate(comment_count=Count("comments"))
             .order_by("-pub_date")
         )
-    
+
 
 class CategoryPostsListView(ListView):
     model = Post
-    paginate_by = settings.POSTS_PER_PAGE
+    paginate_by = POST_IN_PAGE
     template_name = "blog/category.html"
 
     def get_queryset(self):
@@ -87,7 +87,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
     def get_success_url(self):
         return reverse("blog:profile", kwargs={"username": self.request.user})
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["category"] = get_object_or_404(
@@ -128,7 +127,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ProfileListView(ListView):
     model = Post
-    paginate_by = settings.POSTS_PER_PAGE
+    paginate_by = POST_IN_PAGE
     template_name = "blog/profile.html"
 
     def get_queryset(self):
