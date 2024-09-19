@@ -97,7 +97,10 @@ class Comment(PublishedModel):
         related_name="comments",
         verbose_name="публикация",
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата публикации"
+    )
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Автор комментария"
