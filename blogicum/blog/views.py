@@ -37,7 +37,7 @@ class IndexListView(ListView):
         )
 
 
-class CategoryPostsListView(ListView):
+class CategoryListView(ListView):
     model = Post
     paginate_by = POST_IN_PAGE
     template_name = "blog/category.html"
@@ -61,7 +61,7 @@ class PostDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(
-            self.objects.published(),
+            Post.objects.published(),
             pk=self.kwargs["id"]
         )
 
