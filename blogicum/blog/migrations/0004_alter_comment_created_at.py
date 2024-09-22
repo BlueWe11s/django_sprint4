@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0003_alter_comment_created_at'),
+        ("blog", "0003_alter_comment_created_at"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='comment',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации'),
+            model_name="comment",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, verbose_name="Дата публикации"
+            ),
         ),
     ]
