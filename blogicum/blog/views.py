@@ -1,9 +1,6 @@
-from typing import Any
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Count
-from django.http.request import HttpRequest as HttpRequest
-from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
@@ -16,8 +13,6 @@ from django.views.generic import (
 )
 from .form import CommentForm, PostForm, ProfileEditForm
 from .models import Category, Comment, Post
-
-# from .utils import get_post_data
 from .const import POST_IN_PAGE
 
 
@@ -61,7 +56,10 @@ class PostDetailView(DetailView):
     template_name = "blog/detail.html"
 
     def get_object(self, queryset=None):
-        return get_object_or_404(Post.objects.published(), pk=self.kwargs["id"])
+        return get_object_or_404(
+            Post.objects.published(),
+            pk=self.kwargs["id"]
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -120,7 +118,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.get_object().author == self.request.user
 
     def get_success_url(self):
-        return reverse("blog:post_detail", kwargs={"id": self.kwargs["post_id"]})
+        return reverse(
+            "blog:post_detail",
+            kwargs={"id": self.kwargs["post_id"]}
+        )
 
     def handle_no_permission(self):
         return redirect("blog:post_detail", id=self.args["post_id"])
@@ -142,7 +143,10 @@ class ProfileListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["profile"] = get_object_or_404(User, username=self.kwargs["username"])
+        context["profile"] = get_object_or_404(
+            User,
+            username=self.kwargs["username"]
+        )
         return context
 
 
@@ -168,7 +172,9 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.comment = get_object_or_404(
-            Post, pk=kwargs.get("post_id"), category__is_published=True
+            Post,
+            pk=kwargs.get('post_id'),
+            category__is_published=True
         )
         return super().dispatch(request, *args, **kwargs)
 
@@ -178,7 +184,8 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("blog:post_detail", kwargs={"id": self.kwargs["post_id"]})
+        return reverse("blog:post_detail",
+                       kwargs={"id": self.kwargs["post_id"]})
 
 
 class CommentUpdateView(LoginRequiredMixin, UpdateView, UserPassesTestMixin):
