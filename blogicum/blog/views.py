@@ -75,14 +75,14 @@ class PostDetailView(DetailView):
         return context
 
 
-class PostDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = "blog/create.html"
     pk_url_kwarg = "post_id"
 
     def dispatch(self, request, *args, **kwargs):
         if self.get_object().author != request.user:
-            return redirect("blog:post_detail", id=self.kwargs["post_id"])
+            return redirect("blog:post_detail", post_id=self.kwargs["post_id"])
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -119,11 +119,11 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse(
             "blog:post_detail",
-            kwargs={"id": self.kwargs["post_id"]}
+            kwargs={"post_id": self.kwargs["post_id"]}
         )
 
     def handle_no_permission(self):
-        return redirect("blog:post_detail", id=self.kwargs["post_id"])
+        return redirect("blog:post_detail", post_id=self.kwargs["post_id"])
 
 
 class ProfileListView(ListView):
@@ -149,12 +149,13 @@ class ProfileListView(ListView):
         return context
 
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView, UserPassesTestMixin):
+class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = User
     template_name = "blog/user.html"
     form_class = ProfileEditForm
 
     def test_func(self):
-        return self.get_object().author == self.request.user
+        return self.get_object() == self.request.user
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -187,7 +188,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
                        kwargs={"post_id": self.kwargs["post_id"]})
 
 
-class CommentUpdateView(LoginRequiredMixin, UpdateView, UserPassesTestMixin):
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = "blog/comment.html"
@@ -201,8 +202,11 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView, UserPassesTestMixin):
             "blog:post_detail", kwargs={"post_id": self.kwargs.get("post_id")}
         )
 
+    def handle_no_permission(self):
+        return redirect("blog:post_detail", post_id=self.kwargs["post_id"])
 
-class CommentDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = "blog/comment.html"
     pk_url_kwarg = "comment_id"
@@ -214,3 +218,6 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
         return reverse(
             "blog:post_detail", kwargs={"post_id": self.kwargs.get("post_id")}
         )
+
+    def handle_no_permission(self):
+        return redirect("blog:post_detail", post_id=self.kwargs["post_id"])
