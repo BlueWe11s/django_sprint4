@@ -124,7 +124,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         )
 
     def handle_no_permission(self):
-        return redirect("blog:post_detail", id=self.args["post_id"])
+        return redirect("blog:post_detail", id=self.kwargs["post_id"])
 
 
 class ProfileListView(ListView):
