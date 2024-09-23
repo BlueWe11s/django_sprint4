@@ -11,7 +11,7 @@ urlpatterns = [
         name="category_posts",
     ),
     path(
-        "posts/<int:id>/",
+        "posts/<int:post_id>/",
         views.PostDetailView.as_view(),
         name="post_detail"
     ),

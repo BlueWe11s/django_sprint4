@@ -56,10 +56,17 @@ class PostDetailView(DetailView):
     template_name = "blog/detail.html"
 
     def get_object(self, queryset=None):
-        return get_object_or_404(
-            Post.objects.published(),
-            pk=self.kwargs["id"]
-        )
+        self.author = get_object_or_404(Post, pk=self.kwargs['post_id'])
+        if self.request.user == self.author.author:
+            return get_object_or_404(
+                Post.objects,
+                pk=self.kwargs["post_id"]
+            )
+        else:
+            return get_object_or_404(
+                Post.objects.published(),
+                pk=self.kwargs["post_id"]
+            )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -85,14 +92,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
 
     def get_success_url(self):
         return reverse("blog:profile", kwargs={"username": self.request.user})
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["category"] = get_object_or_404(
-            Category.objects.values("id", "title", "description"),
-            slug=self.kwargs["category_slug"],
-        )
-        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -185,7 +184,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("blog:post_detail",
-                       kwargs={"id": self.kwargs["post_id"]})
+                       kwargs={"post_id": self.kwargs["post_id"]})
 
 
 class CommentUpdateView(LoginRequiredMixin, UpdateView, UserPassesTestMixin):
@@ -205,8 +204,8 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView, UserPassesTestMixin):
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
     model = Comment
-    pk_url_kwarg = "comment_id"
     template_name = "blog/comment.html"
+    pk_url_kwarg = "comment_id"
 
     def test_func(self):
         return self.get_object().author == self.request.user
