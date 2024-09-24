@@ -54,6 +54,7 @@ class Post(PublishedModel):
         User,
         on_delete=models.CASCADE,
         verbose_name="Автор публикации",
+        related_name="profile"
     )
     location = models.ForeignKey(
         Location,
@@ -76,9 +77,8 @@ class Post(PublishedModel):
         help_text="Если установить дату и время "
         "в будущем — можно делать отложенные публикации.",
     )
-
-    objects = PostsQuerySet.as_manager()
     image = models.ImageField("Фото", blank=True)
+    objects = PostsQuerySet.as_manager()
 
     class Meta:
         default_related_name = "posts"
@@ -90,7 +90,6 @@ class Post(PublishedModel):
 
 
 class Comment(PublishedModel):
-    text = models.TextField("Текст комментария")
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
@@ -100,11 +99,12 @@ class Comment(PublishedModel):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Автор комментария"
     )
+    text = models.TextField("Текст комментария")
 
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
-        ordering = ("created_at",)
+        ordering = ["created_at",]
 
     def __str__(self):
         return f"Комментарий пользователя {self.author}"

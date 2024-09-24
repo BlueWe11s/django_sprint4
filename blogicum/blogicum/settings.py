@@ -14,16 +14,16 @@ SECRET_KEY = "django-insecure-$u86j1!$vc#)#6)9k(*89&k!_ks9=w%7wpb3rp7tw#vbniss_o
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
+    'localhost',
+    '127.0.0.1',
+    'www.BlueWells.pythonanywhere.com',
+    'BlueWells.pythonanywhere.com'
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "blog.apps.BlogConfig",
-    "pages.apps.PagesConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "debug_toolbar",
     "django_bootstrap5",
+    "blog.apps.BlogConfig",
+    "pages.apps.PagesConfig",
 ]
 
 
@@ -141,3 +143,5 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 MEDIA_ROOT = BASE_DIR / "media"
+
+POST_IN_PAGE = 10

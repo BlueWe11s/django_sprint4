@@ -1,1 +1,0 @@
-POST_IN_PAGE = 10
