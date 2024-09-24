@@ -158,9 +158,6 @@ class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin,
     def get_object(self, queryset=None):
         return self.request.user
 
-    def handle_no_permission(self):
-        return super().handle_no_permission()
-
 
 class CommentCreateView(LoginRequiredMixin, UrlSuccesPostMixin, CreateView):
     model = Comment
