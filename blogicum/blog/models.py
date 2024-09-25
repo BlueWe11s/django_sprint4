@@ -22,7 +22,8 @@ class Category(PublishedModel):
         verbose_name="Идентификатор",
     )
 
-    class Meta:
+    class Meta(PublishedModel.Meta):
+        ordering = ('created_at',)
         verbose_name = "категория"
         verbose_name_plural = "Категории"
         indexes = [
@@ -80,10 +81,10 @@ class Post(PublishedModel):
     image = models.ImageField("Фото", blank=True)
     objects = PostsQuerySet.as_manager()
 
-    class Meta:
-        default_related_name = "posts"
-        verbose_name = "публикация"
-        verbose_name_plural = "Публикации"
+    class Meta(PublishedModel.Meta):
+        verbose_name = 'публикация'
+        verbose_name_plural = 'Публикации'
+        default_related_name = 'posts'
 
     def __str__(self):
         return self.title
