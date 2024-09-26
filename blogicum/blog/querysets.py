@@ -14,4 +14,5 @@ class PostsQuerySet(models.QuerySet):
         ).post_select_related()
 
     def annotate_comments(self):
-        return self.annotate(comment_count=Count('comments')).order_by('-pub_date')
+        return (self.annotate(comment_count=Count('comments'))
+                .order_by('-pub_date'))
