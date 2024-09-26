@@ -28,7 +28,6 @@ class IndexListView(ListView):
             Post.objects
             .published()
             .annotate_comments()
-            .order_by('-pub_date')
         )
 
 
@@ -46,7 +45,6 @@ class CategoryListView(ListView):
             category.posts.post_select_related()
             .published()
             .annotate_comments()
-            .order_by('-pub_date')
         )
 
 
@@ -112,7 +110,6 @@ class ProfileListView(ListView):
             self.model.objects.select_related('author')
             .filter(author__id=user.id)
             .annotate_comments()
-            .order_by('-pub_date')
         )
 
     def get_context_data(self, **kwargs):

@@ -39,7 +39,7 @@ class Location(PublishedModel):
         max_length=MAX_LENGTH, blank=False, verbose_name="Название места"
     )
 
-    class Meta:
+    class Meta(PublishedModel.Meta):
         verbose_name = "местоположение"
         verbose_name_plural = "Местоположения"
         indexes = [
@@ -82,6 +82,7 @@ class Post(PublishedModel):
     objects = PostsQuerySet.as_manager()
 
     class Meta(PublishedModel.Meta):
+        ordering = ('-pub_date',)
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
         default_related_name = 'posts'
@@ -102,10 +103,9 @@ class Comment(PublishedModel):
     )
     text = models.TextField("Текст комментария")
 
-    class Meta:
+    class Meta(PublishedModel.Meta):
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
-        ordering = ["created_at", ]
 
     def __str__(self):
         return f"Комментарий пользователя {self.author}"
