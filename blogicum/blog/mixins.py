@@ -18,18 +18,18 @@ class UserTestMixin(UserPassesTestMixin):
         return self.get_object() == self.request.user
 
 
-class UrlSuccesProfileMixin():
+class UrlSuccesProfileMixin:
     def get_success_url(self):
         return reverse('blog:profile', kwargs={'username': self.request.user})
 
 
-class UrlSuccesPostMixin():
+class UrlSuccesPostMixin:
     def get_success_url(self):
         return reverse('blog:post_detail',
                        kwargs={'post_id': self.kwargs['post_id']})
 
 
-class CommentUpdateMixin():
+class CommentUpdateMixin:
     model = Comment
     form_class = CommentForm
     template_name = 'blog/comment.html'

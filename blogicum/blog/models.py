@@ -23,7 +23,6 @@ class Category(PublishedModel):
     )
 
     class Meta(PublishedModel.Meta):
-        ordering = ('created_at',)
         verbose_name = "категория"
         verbose_name_plural = "Категории"
         indexes = [
